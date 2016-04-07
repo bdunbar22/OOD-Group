@@ -59,27 +59,6 @@ public class Controller implements IController {
         configureTiming();
     }
 
-    //Convenience constructor to get mock handlers into views
-    public Controller(IPiece piece, IMusicView musicView, boolean test) throws
-        InvalidClassException {
-        this.piece = piece;
-        this.playing = false;
-        this.currentBeat = 0;
-        if (!(musicView instanceof IGuiView)) {
-            throw new InvalidClassException(
-                "In order to have handlers, must also be an IGuiView");
-        }
-        IGuiView view = (IGuiView) musicView;
-        this.musicView = view;
-        try {
-            configureHandlers();
-        } catch (InvalidClassException e) {
-            //Do nothing. Could not add handlers to an IMusicView that was not also an
-            //IGuiView
-        }
-        configureTiming();
-    }
-
     /**
      * Start displaying music.
      */

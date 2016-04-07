@@ -73,10 +73,12 @@ public class MidiViewImpl implements IMusicView {
         int volume = note.getVolume();
 
         //Midi supports pitch values 0 - 127
-        MidiMessage start = new ShortMessage(ShortMessage.NOTE_ON, instrument, pitch, volume);
-        MidiMessage stop = new ShortMessage(ShortMessage.NOTE_OFF, instrument, pitch, volume);
-        this.receiver.send(start, startTime);
-        this.receiver.send(stop, endTime);
+        try {
+            MidiMessage start = new ShortMessage(ShortMessage.NOTE_ON, instrument, pitch, volume);
+            MidiMessage stop = new ShortMessage(ShortMessage.NOTE_OFF, instrument, pitch, volume);
+            this.receiver.send(start, startTime);
+            this.receiver.send(stop, endTime);
+        } catch (InvalidMidiDataException e) {}
     }
 
     /**
