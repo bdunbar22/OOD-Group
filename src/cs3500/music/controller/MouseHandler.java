@@ -100,6 +100,9 @@ public class MouseHandler implements MouseListener {
                         case LOCATION:
                             dx = e.getX() - mousePoint.x;
                             mouseHandlerHelper.addNoteLocationNeeded(dx);
+                            break;
+                        case REPEAT:
+                            mouseHandlerHelper.addRepeat();
                     }
                     break;
             }

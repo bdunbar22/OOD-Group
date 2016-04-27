@@ -1,5 +1,7 @@
 package cs3500.music.model;
 
+import java.util.List;
+
 /**
  * The interface for a piece of cs3500.music.
  * A piece of cs3500.music is a collection of notes that have a certain tone, start time and
@@ -128,4 +130,11 @@ public interface IPiece extends INoteList {
      * Proceed to the next beat of the piece. Takes care of repeats
      */
     void nextBeat();
+
+    /**
+     * Return the repeats in a piece.
+     *
+     * @return list of repeats.
+     */
+    List<IRepeat> getRepeats();
 }

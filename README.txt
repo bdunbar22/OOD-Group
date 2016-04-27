@@ -125,7 +125,7 @@ Controller functionality!!!!!!!!!!
 <p>L = Location (user gets to enter a location outside of the song area)</p>
 <i>Pressing the key will enter the operation mode. Pressing a different key will switch
 modes. Starts at Add mode.</i>
-<p>Press 'r' reverses the song.</p>
+<p>Press 'z' reverses the song.</p>
 <p>Press 'b' to go back to the start</p>
 <p>Press arrow keys to scroll</p>
 <p>Press home and end to get to start and end of piece for viewing</p>
@@ -163,6 +163,11 @@ A repeat is stored as an object with a start beat, end beat, and boolean to repr
 A piece stores a list of repeats that will affect playback.
 
 Repeats are added after the tempo line of text files.
+ex. repeat 1 2
+The first number is the low beat of the repeat. The second number is the high beat of the repeat.
+
+To add repeats via controller you have to toggle repeat mode by pressing 'r' then you can click
+ to add a repeat.
 
 Best Regards,
 Ben Dunbar & Sam Letcher

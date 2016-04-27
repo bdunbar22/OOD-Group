@@ -25,7 +25,7 @@ import java.util.Timer;
  * <p>L = Location (user gets to enter a location outside of the song area)</p>
  * <i>Pressing the key will enter the operation mode. Pressing a different key will switch
  * modes. Starts at Add mode.</i>
- * <p>Press 'r' reverses the song.</p>
+ * <p>Press 'z' reverses the song.</p>
  * <p>Press 'b' to go back to the start</p>
  * <p>Press arrow keys to scroll</p>
  * <p>Press home and end to get to start and end of piece for viewing</p>
@@ -125,7 +125,8 @@ public class Controller implements IController {
         Map<Integer, Runnable> keyPresses = new HashMap<>();
         Map<Integer, Runnable> keyReleases = new HashMap<>();
 
-        keyPresses.put(KeyEvent.VK_R, new ReversePiece());
+        keyPresses.put(KeyEvent.VK_Z, new ReversePiece());
+        keyPresses.put(KeyEvent.VK_R, new repeatToggle());
         keyPresses.put(KeyEvent.VK_END, new viewExtremaEnd());
         keyPresses.put(KeyEvent.VK_0, new viewExtremaEnd());
         keyPresses.put(KeyEvent.VK_HOME, new viewExtremaStart());
@@ -216,6 +217,32 @@ public class Controller implements IController {
             int startBeat = Integer.parseInt(startBeatString);
 
             piece.addNote(new Note(pitch, octave, startBeat, duration));
+            IViewPiece updatedViewPiece = new ViewPiece(piece);
+            this.viewPiece = updatedViewPiece;
+            musicView.updateViewPiece(updatedViewPiece);
+        } catch (Exception exc) {
+            System.out.print(exc.getStackTrace());
+            //Could note make note, continue.
+        }
+    }
+
+    /**
+     * Prompt the user for a start and end beat of a repeat.
+     * Add that repeat to the model and update the views.
+     */
+    private void addRepeatFromController() {
+        try {
+            String endString = JOptionPane.showInputDialog(
+                "Enter the beat to repeat from: ");
+
+            String startString = JOptionPane
+                .showInputDialog("Enter the beat to go back to: ");
+
+            int startBeat = Integer.parseInt(startString);
+            int endBeat = Integer.parseInt(endString);
+
+            IRepeat r = new Repeat(startBeat, endBeat);
+            this.piece.addRepeat(r);
             IViewPiece updatedViewPiece = new ViewPiece(piece);
             this.viewPiece = updatedViewPiece;
             musicView.updateViewPiece(updatedViewPiece);
@@ -342,7 +369,7 @@ public class Controller implements IController {
      * moving or copying notes.
      */
     public enum Toggle {
-        ADD, COPY, MOVE, LOCATION
+        ADD, COPY, MOVE, LOCATION, REPEAT
     }
 
 
@@ -421,6 +448,19 @@ public class Controller implements IController {
                 toggle = Toggle.ADD;
             else
                 toggle = Toggle.COPY;
+        }
+    }
+
+
+    /**
+     * Sets the toggle to ADD if it is COPY, and to COPY otherwise
+     */
+    class repeatToggle implements Runnable {
+        @Override public void run() {
+            if (toggle == Toggle.REPEAT)
+                toggle = Toggle.ADD;
+            else
+                toggle = Toggle.REPEAT;
         }
     }
 
@@ -568,6 +608,11 @@ public class Controller implements IController {
         //provide use of controllers note creation with user location input
         @Override public void addNoteLocationNeeded(int dx) {
             addNotePromptLocation(dx);
+        }
+
+        //provide use of controllers add repeat ability.
+        @Override public void addRepeat() {
+            addRepeatFromController();
         }
     }
 

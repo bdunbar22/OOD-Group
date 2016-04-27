@@ -80,4 +80,11 @@ public interface MouseHandlerHelper {
      * @param dx length
      */
     void addNoteLocationNeeded(int dx);
+
+    /**
+     * Add a repeat to the piece, repeat is default to not completed.
+     *
+     * Asks for user input to get start and end beats.
+     */
+    void addRepeat();
 }

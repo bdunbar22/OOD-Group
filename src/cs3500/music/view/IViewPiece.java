@@ -1,6 +1,7 @@
 package cs3500.music.view;
 
 import cs3500.music.model.INote;
+import cs3500.music.model.IRepeat;
 import cs3500.music.model.Octave;
 import cs3500.music.model.Pitch;
 import javafx.util.Pair;
@@ -88,4 +89,11 @@ public interface IViewPiece {
     int getTempo();
 
     int getBeat();
+
+    /**
+     * Get the repeats of a song.
+     *
+     * @return list of repeats.
+     */
+    List<IRepeat> getRepeats();
 }

@@ -141,4 +141,12 @@ public final class Piece extends NoteList implements IPiece {
 
         currentBeat++;
     }
+
+    @Override public List<IRepeat> getRepeats() {
+        List<IRepeat> repeats = new ArrayList<>();
+        for(IRepeat r: this.repeats) {
+            repeats.add(r.copy());
+        }
+        return repeats;
+    }
 }

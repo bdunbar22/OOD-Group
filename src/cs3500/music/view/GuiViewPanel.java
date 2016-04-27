@@ -1,9 +1,6 @@
 package cs3500.music.view;
 
-import cs3500.music.model.INote;
-import cs3500.music.model.Note;
-import cs3500.music.model.Octave;
-import cs3500.music.model.Pitch;
+import cs3500.music.model.*;
 import javafx.util.Pair;
 
 import javax.swing.*;
@@ -75,6 +72,9 @@ public class GuiViewPanel extends JPanel implements IGuiViewPanel {
 
             // Add the background graph
             this.drawGraph(g);
+
+            //Draw in the repeat distinguishing lines.
+            this.drawRepeats(g);
 
             // Draw the current beat with a red line
             this.drawPlaceholder(g);
@@ -245,6 +245,33 @@ public class GuiViewPanel extends JPanel implements IGuiViewPanel {
         g2.setStroke(new BasicStroke(2));
         g.setColor(Color.decode("#FF0017"));
         g2.drawLine(x, lowY, x, highY);
+    }
+
+    /**
+     * Draw the bars showing where the song will repeat from and to.
+     *
+     * @param g to draw with.
+     */
+    private void drawRepeats(Graphics g) {
+        int yConnect = lowY;
+        for(IRepeat r: this.viewPiece.getRepeats()) {
+            if (!r.isCompleted()) {
+                yConnect += 5;
+                //base x values on repeat
+                //base y values on gui height.
+                int x = lowX + 1 + r.getStart() * xGraphStep;
+                int x2 = lowX + 1 + r.getEnd() * xGraphStep;
+                highY = 20 + viewPiece.getToneRange().size() * yGraphStep;
+
+                Graphics2D g2 = (Graphics2D) g;
+                g2.setStroke(new BasicStroke(2));
+                g.setColor(Color.decode("#311B92"));
+                g2.drawLine(x, lowY, x, highY);
+                g2.drawLine(x2, lowY, x2, highY);
+                g2.drawLine(x2 + 3, lowY, x2 + 3, highY);
+                g2.drawLine(x, yConnect, x2, yConnect);
+            }
+        }
     }
 
     /**

@@ -160,6 +160,10 @@ public class MouseHandlerTest {
         public void addNoteLocationNeeded(int dx) {
             addNotePromptLocation(dx);
         }
+
+        @Override public void addRepeat() {
+            addRepeat();
+        }
     }
 
     private void addNote(int x, int y, int length) {

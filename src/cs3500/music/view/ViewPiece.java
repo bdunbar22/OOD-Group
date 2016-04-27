@@ -1,9 +1,6 @@
 package cs3500.music.view;
 
-import cs3500.music.model.INote;
-import cs3500.music.model.IPiece;
-import cs3500.music.model.Octave;
-import cs3500.music.model.Pitch;
+import cs3500.music.model.*;
 import javafx.util.Pair;
 
 import java.util.List;
@@ -62,5 +59,9 @@ public class ViewPiece implements IViewPiece {
 
     @Override public int getBeat() {
         return piece.getBeat();
+    }
+
+    @Override public List<IRepeat> getRepeats() {
+        return piece.getRepeats();
     }
 }
