@@ -17,6 +17,9 @@ public class CompositeView implements IGuiView {
     MidiViewImpl midiView;
     IGuiView guiViewFrame;
     IViewPiece viewPiece;
+    KeyListener listenerKey;
+    MouseListener listenerMouse;
+    int startBeat;
 
     public CompositeView(IViewPiece viewPiece) {
         midiView = new MidiViewImpl(viewPiece);
@@ -26,7 +29,8 @@ public class CompositeView implements IGuiView {
 
     /**
      * An audible representation of music is given in this view. This should play based on the
-     * current beat of the song. The controller can updateViewPiece the song and then view music at the
+     * current beat of the song. The controller can updateViewPiece the song and then view music
+     * at the
      * next beat again.
      */
     @Override public void viewMusic() {
@@ -49,7 +53,14 @@ public class CompositeView implements IGuiView {
      */
     @Override public void addKeyListener(KeyListener listener) {
         guiViewFrame.addKeyListener(listener);
+        this.listenerKey = listener;
     }
+
+    //For testing
+    public KeyListener getKeyListener() { return listenerKey; }
+
+    //For testing
+    public MouseListener getMouseListener() { return listenerMouse; }
 
     /**
      * Want the gui part of this view to listen to the mouse.
@@ -58,6 +69,7 @@ public class CompositeView implements IGuiView {
      */
     @Override public void addMouseListener(MouseListener listener) {
         guiViewFrame.addMouseListener(listener);
+        this.listenerMouse = listener;
     }
 
     /**

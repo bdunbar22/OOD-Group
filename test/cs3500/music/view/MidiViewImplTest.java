@@ -18,7 +18,7 @@ public class MidiViewImplTest {
   /**
    * Test the Midi View using a mock
    */
-  @Test public void testMidiView() {
+ @Test public void testMidiView() {
     Synthesizer synthesizer = new MockSynthesizer();
     Receiver receiver;
     try {

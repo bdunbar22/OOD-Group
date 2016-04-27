@@ -57,6 +57,23 @@ public class Controller implements IController {
         configureTiming();
     }
 
+    //Convenience constructor to get mock handlers into views
+    public Controller(IPiece piece, IMusicView musicView, boolean test) throws
+        InvalidClassException {
+        this.piece = piece;
+        this.playing = false;
+        if (!(musicView instanceof IGuiView)) {
+            throw new InvalidClassException(
+                "In order to have handlers, must also be an IGuiView");
+        }
+        IGuiView view = (IGuiView) musicView;
+        this.musicView = view;
+    }
+    //For Testing return a copy of the piece.
+    public IPiece getPiece() {
+        return piece.copy();
+    }
+
     /**
      * Start displaying music.
      */
@@ -496,7 +513,6 @@ public class Controller implements IController {
             musicView = view;
         }
     }
-
 
     /**
      * Provide the mouse handler with necessary functions from the controller.
