@@ -153,5 +153,16 @@ Our design changes from the previous assignment were mainly updates to the way t
 
 All provided methods have been tested thoroughly.
 
+Repeats:
+
+A repeat is stored as an object with a start beat, end beat, and boolean to represent if it has
+ been completed or not. A repeat will be played as follows: the song will play normal up to
+ the end beat of the repeat, then it will return to the start beat of the repeat and set the
+ repeat to completed. At this point the repeat will be ignored for the rest of song play.
+
+A piece stores a list of repeats that will affect playback.
+
+Repeats are added after the tempo line of text files.
+
 Best Regards,
 Ben Dunbar & Sam Letcher

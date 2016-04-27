@@ -123,4 +123,9 @@ public interface IPiece extends INoteList {
      * @param repeat to add
      */
     void addRepeat(final IRepeat repeat);
+
+    /**
+     * Proceed to the next beat of the piece. Takes care of repeats
+     */
+    void nextBeat();
 }

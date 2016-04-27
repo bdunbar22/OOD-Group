@@ -125,4 +125,20 @@ public final class Piece extends NoteList implements IPiece {
     public void addRepeat(IRepeat repeat) {
         this.repeats.add(repeat);
     }
+
+    /**
+     * Go to the next beat of a song. Paying attention to stored repeats.
+     */
+    @Override
+    public void nextBeat() {
+        for(IRepeat r: this.repeats) {
+            if(r.getEnd() == currentBeat && !r.isCompleted()) {
+                currentBeat = r.getStart();
+                r.setCompleted(true);
+                return;
+            }
+        }
+
+        currentBeat++;
+    }
 }

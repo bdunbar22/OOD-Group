@@ -38,4 +38,15 @@ public class CompositionBuilder implements ICompositionBuilder<IPiece> {
         piece.addNote(new Note(charPitch, octave, start, duration, instrument, volume));
         return this;
     }
+
+    /**
+     * Add a repeat to the piece.
+     *
+     * @param repeat to add
+     */
+    @Override
+    public ICompositionBuilder<IPiece> addRepeat(IRepeat repeat) {
+        piece.addRepeat(repeat);
+        return this;
+    }
 }

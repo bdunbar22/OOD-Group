@@ -1,5 +1,8 @@
 package cs3500.music.util;
 
+import cs3500.music.model.IRepeat;
+import cs3500.music.model.Repeat;
+
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
@@ -51,6 +54,18 @@ public class MusicReader {
                     } catch (NoSuchElementException e) {
                         throw new IllegalArgumentException(
                             "Malformed note line: " + scanner.nextLine());
+                    }
+                    break;
+                case "repeat":
+                    try {
+                        int startOfRepeat = scanner.nextInt();
+                        int endOfRepeat = scanner.nextInt();
+                        IRepeat repeat = new Repeat(startOfRepeat, endOfRepeat);
+                        piece.addRepeat(repeat);
+                    }
+                    catch (NoSuchElementException e) {
+                        throw new IllegalArgumentException("Malformed repeat line: " + scanner
+                            .nextLine());
                     }
                     break;
                 default:

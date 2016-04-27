@@ -90,7 +90,7 @@ public class Controller implements IController {
      * respond so that the music plays and the gui has a moving bar.
      */
     private void updateEachBeat() {
-        piece.setBeat(piece.getBeat() + 1);
+        piece.nextBeat();
         IViewPiece newViewPiece = new ViewPiece(piece, viewPiece);
         musicView.updateViewPiece(newViewPiece);
         IGuiView view = (IGuiView) musicView;
@@ -170,7 +170,7 @@ public class Controller implements IController {
             }
             this.timer = new Timer();
             playing = true;
-            int period = piece.getTempo() / TEMPO_TO_PERIOD * 4;
+            int period = piece.getTempo() / TEMPO_TO_PERIOD;
             timer.schedule(new timerTask(this), 0, period);
         } catch (InvalidClassException e) {
             //Do nothing. Only need timing in some cases.
@@ -332,7 +332,7 @@ public class Controller implements IController {
             timer = new Timer();
         } else {
             playing = true;
-            int period = piece.getTempo() / TEMPO_TO_PERIOD * 4;
+            int period = piece.getTempo() / TEMPO_TO_PERIOD;
             timer.schedule(new timerTask(this), 0, period);
         }
     }
