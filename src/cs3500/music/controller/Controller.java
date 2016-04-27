@@ -43,13 +43,11 @@ public class Controller implements IController {
     private Timer timer;
     private boolean playing;
     private Toggle toggle = Toggle.ADD;
-    private int currentBeat;
 
     public Controller(IPiece piece, IMusicView musicView) {
         this.piece = piece;
         this.musicView = musicView;
         this.playing = false;
-        this.currentBeat = 0;
         try {
             configureHandlers();
         } catch (InvalidClassException e) {
@@ -72,9 +70,10 @@ public class Controller implements IController {
      * respond so that the music plays and the gui has a moving bar.
      */
     private void updateEachBeat() {
-        currentBeat++;
+        piece.setBeat(piece.getBeat() + 1);
+        musicView.updateViewPiece(new ViewPiece(piece));
         IGuiView view = (IGuiView) musicView;
-        view.playBeat(currentBeat);
+        view.playBeat();
     }
 
     /**
@@ -294,7 +293,7 @@ public class Controller implements IController {
      * @return true if song is over.
      */
     private boolean checkSongEnd() {
-        return (currentBeat >= piece.getLastBeat());
+        return (piece.getBeat() >= piece.getLastBeat());
     }
 
     /**
@@ -326,7 +325,7 @@ public class Controller implements IController {
      */
     class Restart implements Runnable {
         @Override public void run() {
-            currentBeat = 0;
+           piece.setBeat(0);
         }
     }
 

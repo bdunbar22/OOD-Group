@@ -100,10 +100,10 @@ public class MidiViewImpl implements IMusicView {
         this.receiver.close();
     }
 
-    public void viewMusicPerBeat(final int currentBeat) {
+    public void viewMusicPerBeat() {
         try {
-            for (INote note : viewPiece.getNotesInBeat(currentBeat)) {
-                if (note.getStart() == currentBeat) {
+            for (INote note : viewPiece.getNotesInBeat(viewPiece.getBeat())) {
+                if (note.getStart() == viewPiece.getBeat()) {
                     try {
                         playNote(note);
                     } catch (InvalidMidiDataException e) {

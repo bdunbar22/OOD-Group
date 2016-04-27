@@ -68,7 +68,6 @@ public interface IPiece extends INoteList {
      */
     IPiece reversePiece();
 
-
     /**
      * Allow for a song to be copied.
      * This should be implemented so that the piece of cs3500.music returned is a deep copy of the
@@ -100,9 +99,28 @@ public interface IPiece extends INoteList {
     int getTempo();
 
     /**
+     * Get the current beat.
+     * @return int beat.
+     */
+    int getBeat();
+
+    /**
+     * Set the current beat.
+     * @param beat to set.
+     */
+    void setBeat(int beat);
+
+    /**
      * Every song should have a tempo.
      *
      * @param tempo to set
      */
     void setTempo(final int tempo);
+
+    /**
+     * Add a repeat to the piece.
+     *
+     * @param repeat to add
+     */
+    void addRepeat(final IRepeat repeat);
 }

@@ -84,8 +84,7 @@ public interface IGuiView extends IMusicView {
     /**
      * Display music according to given beat.
      *
-     * @param currentBeat to view for
      */
-    void playBeat(final int currentBeat);
+    void playBeat();
 }
 

@@ -107,8 +107,8 @@ public class GuiViewFrame extends JFrame implements IGuiView {
         displayPanel.scrollRectToVisible(r);
     }
 
-    @Override public void playBeat(final int currentBeat) {
-        this.displayPanel.updateBeat(currentBeat);
+    @Override public void playBeat() {
+        this.displayPanel.updateBeat();
     }
 
     @Override public void scrollUp() {

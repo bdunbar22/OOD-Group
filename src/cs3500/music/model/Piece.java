@@ -1,5 +1,6 @@
 package cs3500.music.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -14,12 +15,14 @@ public final class Piece extends NoteList implements IPiece {
     private int measure;
     private int currentBeat;
     private int tempo;
+    private List<IRepeat> repeats;
 
     public Piece() {
         super();
         this.measure = 4;
         this.currentBeat = 0;
         this.tempo = 500000;
+        this.repeats = new ArrayList<>();
     }
 
     public int getMeasure() {
@@ -75,7 +78,8 @@ public final class Piece extends NoteList implements IPiece {
         return piece;
     }
 
-    @Override public IPiece changeField(NoteField field, final int num) {
+    @Override
+    public IPiece changeField(NoteField field, final int num) {
         //get piece after one change
         IPiece piece = this.changeField(field);
         //change that piece the rest of the times needed
@@ -85,7 +89,8 @@ public final class Piece extends NoteList implements IPiece {
         return piece;
     }
 
-    @Override public IPiece reversePiece() {
+    @Override
+    public IPiece reversePiece() {
         IPiece reversed = this.copy();
         final int lastBeat = reversed.getLastBeat();
         //get notes returns a deep copy of the list. But the changeNote function will use the
@@ -98,12 +103,26 @@ public final class Piece extends NoteList implements IPiece {
         return reversed;
     }
 
-    @Override public IPiece copy() {
+    @Override
+    public IPiece copy() {
         IPiece copy = new Piece();
         List<INote> notes = this.getNotes();
         copy.addNotes(notes);
         copy.setMeasure(this.getMeasure());
         copy.setTempo(this.getTempo());
+        for(IRepeat r : this.repeats) {
+            copy.addRepeat(r.copy());
+        }
         return copy;
+    }
+
+    /**
+     * Add a repeat.
+     *
+     * @param repeat to add
+     */
+    @Override
+    public void addRepeat(IRepeat repeat) {
+        this.repeats.add(repeat);
     }
 }
