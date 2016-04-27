@@ -23,6 +23,11 @@ public class ViewPiece implements IViewPiece {
         this.map = piece.getConsolidationMap();
     }
 
+    public ViewPiece(IPiece piece, IViewPiece viewPiece) {
+        this.piece = piece;
+        this.map = viewPiece.getConsolidationMap();
+    }
+
     @Override public List<INote> getNotes() {
         return piece.getNotes();
     }

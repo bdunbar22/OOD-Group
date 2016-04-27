@@ -43,9 +43,11 @@ public class Controller implements IController {
     private Timer timer;
     private boolean playing;
     private Toggle toggle = Toggle.ADD;
+    private IViewPiece viewPiece;
 
     public Controller(IPiece piece, IMusicView musicView) {
         this.piece = piece;
+        this.viewPiece = new ViewPiece(piece);
         this.musicView = musicView;
         this.playing = false;
         try {
@@ -62,6 +64,7 @@ public class Controller implements IController {
         InvalidClassException {
         this.piece = piece;
         this.playing = false;
+        this.viewPiece = new ViewPiece(piece);
         if (!(musicView instanceof IGuiView)) {
             throw new InvalidClassException(
                 "In order to have handlers, must also be an IGuiView");
@@ -88,7 +91,8 @@ public class Controller implements IController {
      */
     private void updateEachBeat() {
         piece.setBeat(piece.getBeat() + 1);
-        musicView.updateViewPiece(new ViewPiece(piece));
+        IViewPiece newViewPiece = new ViewPiece(piece, viewPiece);
+        musicView.updateViewPiece(newViewPiece);
         IGuiView view = (IGuiView) musicView;
         view.playBeat();
     }
@@ -166,7 +170,7 @@ public class Controller implements IController {
             }
             this.timer = new Timer();
             playing = true;
-            int period = piece.getTempo() / TEMPO_TO_PERIOD;
+            int period = piece.getTempo() / TEMPO_TO_PERIOD * 4;
             timer.schedule(new timerTask(this), 0, period);
         } catch (InvalidClassException e) {
             //Do nothing. Only need timing in some cases.
@@ -183,6 +187,7 @@ public class Controller implements IController {
         INote addNote = view.makeNoteFromLocation(x, y, length);
         piece.addNote(addNote);
         IViewPiece updatedViewPiece = new ViewPiece(piece);
+        this.viewPiece = updatedViewPiece;
         musicView.updateViewPiece(updatedViewPiece);
     }
 
@@ -212,6 +217,7 @@ public class Controller implements IController {
 
             piece.addNote(new Note(pitch, octave, startBeat, duration));
             IViewPiece updatedViewPiece = new ViewPiece(piece);
+            this.viewPiece = updatedViewPiece;
             musicView.updateViewPiece(updatedViewPiece);
         } catch (Exception exc) {
             System.out.print(exc.getStackTrace());
@@ -235,6 +241,7 @@ public class Controller implements IController {
         addNote.setVolume(volume);
         piece.addNote(addNote);
         IViewPiece updatedViewPiece = new ViewPiece(piece);
+        this.viewPiece = updatedViewPiece;
         musicView.updateViewPiece(updatedViewPiece);
     }
 
@@ -263,6 +270,7 @@ public class Controller implements IController {
         INote deleteNote = getNote(x, y);
         piece.removeNote(deleteNote);
         IViewPiece updatedViewPiece = new ViewPiece(piece);
+        this.viewPiece = updatedViewPiece;
         musicView.updateViewPiece(updatedViewPiece);
     }
 
@@ -275,6 +283,7 @@ public class Controller implements IController {
         try {
             piece.removeNote(note);
             IViewPiece updatedViewPiece = new ViewPiece(piece);
+            this.viewPiece = updatedViewPiece;
             musicView.updateViewPiece(updatedViewPiece);
         } catch (IllegalArgumentException e) {
             //Note wasn't present, do nothing.
@@ -323,7 +332,7 @@ public class Controller implements IController {
             timer = new Timer();
         } else {
             playing = true;
-            int period = piece.getTempo() / TEMPO_TO_PERIOD;
+            int period = piece.getTempo() / TEMPO_TO_PERIOD * 4;
             timer.schedule(new timerTask(this), 0, period);
         }
     }
@@ -364,6 +373,7 @@ public class Controller implements IController {
         public void run() {
             piece = piece.reversePiece();
             IViewPiece updatedViewPiece = new ViewPiece(piece);
+            viewPiece = updatedViewPiece;
             musicView.updateViewPiece(updatedViewPiece);
         }
     }
@@ -482,6 +492,7 @@ public class Controller implements IController {
                 }
                 piece.setTempo(tempo);
                 IViewPiece updatedViewPiece = new ViewPiece(piece);
+                viewPiece = updatedViewPiece;
                 musicView.updateViewPiece(updatedViewPiece);
             } catch (Exception exc) {
                 System.out.print(exc.getStackTrace());
