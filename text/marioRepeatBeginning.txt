@@ -1,5 +1,6 @@
 tempo 71428
-repeat 4 10
+repeat 160 198
+repeat 190 170
 repeat 5 40
 note 0 2 1 76 64
 note 3 5 1 76 64

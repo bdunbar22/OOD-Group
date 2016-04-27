@@ -123,6 +123,14 @@ public final class Piece extends NoteList implements IPiece {
      */
     @Override
     public void addRepeat(IRepeat repeat) {
+        if(this.getLastBeat() > 0) {
+            if(repeat.getStart() < 0) {
+                repeat.setStart(0);
+            }
+            if(repeat.getEnd() > this.getLastBeat()) {
+                repeat.setEnd(this.getLastBeat() -1);
+            }
+        }
         this.repeats.add(repeat);
     }
 

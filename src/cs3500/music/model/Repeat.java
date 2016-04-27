@@ -11,6 +11,9 @@ public class Repeat implements IRepeat {
     private boolean completed;
 
     public Repeat(int start, int end) {
+        if(start < 0) {
+            start = 0;
+        }
         this.start = start;
         this.end = end;
         this.completed = false;

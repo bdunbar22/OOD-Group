@@ -154,20 +154,48 @@ Our design changes from the previous assignment were mainly updates to the way t
 All provided methods have been tested thoroughly.
 
 Repeats:
+IRepeat - interface for repeat objects
+Repeat - implements IRepeat to allow for repeats
+Piece -> stores a list of repeats
+IPiece: now offers add repeat and get repeats
+IViewPiece: now offers get repeats
 
-A repeat is stored as an object with a start beat, end beat, and boolean to represent if it has
+A repeat is an object with a start beat, end beat, and boolean to represent if it has
  been completed or not. A repeat will be played as follows: the song will play normal up to
  the end beat of the repeat, then it will return to the start beat of the repeat and set the
  repeat to completed. At this point the repeat will be ignored for the rest of song play.
 
 A piece stores a list of repeats that will affect playback.
 
-Repeats are added after the tempo line of text files.
+Test File Input:
+Repeats are added with the text identifier 'repeat' and take two numbers as parameters.
 ex. repeat 1 2
-The first number is the low beat of the repeat. The second number is the high beat of the repeat.
+The first number is the start beat of the repeat. The second number is the end beat of the
+repeat.
+The area between them is the section to be repeated. (Or skipped if the end beat comes before
+the start beat.)
 
+Controller Repeat function:
 To add repeats via controller you have to toggle repeat mode by pressing 'r' then you can click
- to add a repeat.
+ to add a repeat. You will be prompted for the needed information.
+
+GUI Display:
+A double purple line for the end of the repeat
+A single purple line for the start of a repeat
+A horizontal line connecting the two locations representing the repeat
+For multiple repeats the horizontal line is shifted down so you can distinguish them.
+Once a repeat is activated it will be marked as complete and disappear from the gui.
+
+Audio playback:
+functions as you would expect a repeat to play.
+Song plays to the end of the repeat section, then replays the music within the bounds of the
+repeat.
+
+Limited alternate ending:
+If you make the end of a repeat at a beat earlier than the start of a repeat, then you will skip
+the section of music between them.
+You could place one of these skips within a larger repeat range to skip a section of music the
+first time through and then play it the second, to have a different end.
 
 Best Regards,
 Ben Dunbar & Sam Letcher

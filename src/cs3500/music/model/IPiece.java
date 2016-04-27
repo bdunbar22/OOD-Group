@@ -121,6 +121,7 @@ public interface IPiece extends INoteList {
 
     /**
      * Add a repeat to the piece.
+     * If repeat is not valid, ignore it.
      *
      * @param repeat to add
      */
