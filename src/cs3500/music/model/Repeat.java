@@ -10,6 +10,11 @@ public class Repeat implements IRepeat {
     private int end;
     private boolean completed;
 
+    /**
+     * Constructor for a repeat
+     * @param start to set
+     * @param end to set
+     */
     public Repeat(int start, int end) {
         if(start < 0) {
             start = 0;
